@@ -1,0 +1,46 @@
+--// Cleanest Dupe Script Yet - Inventory Only 😎
+
+-- GUI Setup
+local gui = Instance.new("ScreenGui", game.CoreGui)
+gui.Name = "DupeScriptUI"
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 260, 0, 150)
+frame.Position = UDim2.new(0.5, -130, 0.5, -75)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+frame.Active = true
+frame.Draggable = true
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 10)
+
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0, 30)
+title.BackgroundTransparency = 1
+title.Text = "Dupe-Script✨"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 18
+
+local button = Instance.new("TextButton", frame)
+button.Size = UDim2.new(0.8, 0, 0, 40)
+button.Position = UDim2.new(0.1, 0, 0.45, 0)
+button.BackgroundColor3 = Color3.fromRGB(0, 200, 140)
+button.Text = "Duplicate"
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.Font = Enum.Font.Gotham
+button.TextSize = 16
+Instance.new("UICorner", button).CornerRadius = UDim.new(0, 8)
+
+-- Dupe logic (inventory only, no world drop)
+button.MouseButton1Click:Connect(function()
+    local plr = game.Players.LocalPlayer
+    local held = plr.Character and plr.Character:FindFirstChildOfClass("Tool")
+    
+    if held then
+        local clone = held:Clone()
+        clone.Parent = plr.Backpack -- adds to inventory silently
+    else
+        button.Text = "No item held!"
+        wait(1.5)
+        button.Text = "Duplicate"
+    end
+end)
